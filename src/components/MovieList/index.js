@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import { Grid } from '@mui/material';
-import { Movie } from '..';
+import Movie from 'components/Movie';
 import MovieListStyles from './MovieListStyles';
 
 function MovieList({ movies }) {

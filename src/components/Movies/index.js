@@ -6,8 +6,8 @@ import {
   Typography,
 } from '@mui/material';
 import { useSelector } from 'react-redux';
+import MovieList from 'components/MovieList';
 import { useGetMoviesQuery } from '../../services/TMDB';
-import { MovieList } from '../index';
 import MoviesStyles from './MoviesStyles';
 
 function Movies() {
