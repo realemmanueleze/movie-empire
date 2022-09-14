@@ -13,7 +13,7 @@ import { useGetGenresQuery } from 'services/TMDB';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@mui/styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectGenreOrCategory } from 'features/genreOrCategory';
+import { selectGenreOrCategory } from 'features/currentGenreOrCategory';
 import SidebarStyles from './SidebarStyles';
 import { demoCategories } from './Data';
 import genreIcons from '../../assets/genres';
@@ -26,9 +26,9 @@ function Sidebar({ setMobileOpen }) {
   const classes = SidebarStyles();
   const { data, isFetching } = useGetGenresQuery();
   const dispatch = useDispatch();
-  const { genreOrCategoryName } = useSelector(
-    (state) => state.currentGenreOrCategory
-  );
+  // const { genreIdOrCategoryName } = useSelector(
+  //   (state) => state.currentGenreOrCategory
+  // );
 
   return (
     <div className={classes.container}>
@@ -70,7 +70,7 @@ function Sidebar({ setMobileOpen }) {
           </Box>
         ) : (
           data.genres.map(({ id, name }) => (
-            <Link key={id} to="/" className={classes.links}>
+            <Link key={name} to="/" className={classes.links}>
               <ListItem onClick={() => dispatch(selectGenreOrCategory(id))}>
                 <ListItemIcon>
                   <img
