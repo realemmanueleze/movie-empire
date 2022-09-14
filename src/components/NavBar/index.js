@@ -19,8 +19,8 @@ import {
 import { Link } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
 import Sidebar from 'components/Sidebar/index';
-import NavBarStyles from './NavBarStyles';
 import Search from 'components/Search';
+import NavBarStyles from './NavBarStyles';
 
 function NavBar() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -31,7 +31,6 @@ function NavBar() {
 
   return (
     <div>
-      <h1>hey</h1>
       <AppBar position="fixed">
         <Toolbar className={classes.toolbar}>
           {isMobile && (
@@ -58,7 +57,7 @@ function NavBar() {
               <Button
                 color="inherit"
                 component={Link}
-                to={`/profile/:id`}
+                to="/profile/:id"
                 className={classes.linkButton}
                 onClick={() => {}}
               >

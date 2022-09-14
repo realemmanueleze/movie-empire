@@ -6,7 +6,7 @@ export default makeStyles((theme) => ({
     marginLeft: '180px',
     justifyContent: 'center',
     [theme.breakpoints.down('sm')]: {
-      marginLeft: '0px',
+      marginLeft: '0',
     },
   },
 }));
