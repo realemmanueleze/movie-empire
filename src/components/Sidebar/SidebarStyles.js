@@ -2,7 +2,8 @@ import { makeStyles } from '@mui/styles';
 
 export default makeStyles((theme) => ({
   container: {
-    width: '220px',
+    width: '240px',
+    position: 'relative',
   },
   imageLink: {
     display: 'flex',

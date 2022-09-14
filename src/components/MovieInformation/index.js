@@ -1,7 +1,8 @@
+import Movies from 'components/Movies';
 import React from 'react';
 
 function MovieInformation() {
-  return <div>MovieInformation</div>;
+  return <Movies />;
 }
 
 export default MovieInformation;
