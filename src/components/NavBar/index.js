@@ -21,13 +21,14 @@ import { useTheme } from '@mui/material/styles';
 import Sidebar from 'components/Sidebar/index';
 import Search from 'components/Search';
 import NavBarStyles from './NavBarStyles';
+import { fetchToken } from '../utils/index';
 
 function NavBar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const classes = NavBarStyles();
   const isMobile = useMediaQuery('(max-width:600px)');
   const theme = useTheme();
-  const isAuthenticated = true;
+  const isAuthenticated = false;
 
   return (
     <div>
@@ -50,7 +51,7 @@ function NavBar() {
           {!isMobile && <Search />}
           <div>
             {!isAuthenticated ? (
-              <Button color="inherit" onClick={() => {}}>
+              <Button color="inherit" onClick={fetchToken}>
                 Login &nbsp; <AccountCircle />
               </Button>
             ) : (
