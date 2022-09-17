@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   AppBar,
   IconButton,
@@ -21,7 +21,7 @@ import { useTheme } from '@mui/material/styles';
 import Sidebar from 'components/Sidebar/index';
 import Search from 'components/Search';
 import NavBarStyles from './NavBarStyles';
-import { fetchToken } from '../utils/index';
+import { fetchToken, movieApi, createSessionId } from '../utils/index';
 
 function NavBar() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -29,6 +29,27 @@ function NavBar() {
   const isMobile = useMediaQuery('(max-width:600px)');
   const theme = useTheme();
   const isAuthenticated = false;
+
+  const token = localStorage.getItem('requestToken');
+  const sessionIdFromLocalStrorage = localStorage.getItem('sessionId');
+
+  useEffect(() => {
+    const logInUser = async () => {
+      if (token) {
+        if (sessionIdFromLocalStrorage) {
+          const { data: userData } = await movieApi.post(
+            `account?session_id=${sessionIdFromLocalStrorage}`
+          );
+        } else {
+          const sessionId = createSessionId();
+          const { data: userData } = await movieApi.post(
+            `account?session_id=${sessionId}`
+          );
+          localStorage.setItem('sessionId', sessionId);
+        }
+      }
+    };
+  }, [token]);
 
   return (
     <div>
