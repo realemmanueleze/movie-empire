@@ -116,13 +116,23 @@ function NavBar() {
               <Sidebar setMobileOpen={setMobileOpen} />
             </Drawer>
           ) : (
-            <Drawer
-              variant="permanent"
-              classes={{ paper: classes.drawerPaper }}
-              open
-            >
-              <Sidebar setMobileOpen={setMobileOpen} />
-            </Drawer>
+            !isMobile && (
+              <Drawer
+                sx={{
+                  width: '240px',
+                  flexShrink: 0,
+                  '& .MuiDrawer-paper': {
+                    width: '240px',
+                    boxSizing: 'border-box',
+                  },
+                }}
+                variant="permanent"
+                anchor="left"
+                open
+              >
+                <Sidebar setMobileOpen={setMobileOpen} />
+              </Drawer>
+            )
           )}
         </nav>
       </div>
@@ -131,3 +141,9 @@ function NavBar() {
 }
 
 export default NavBar;
+
+{
+  /* <Drawer variant="permanent" classes={{ paper: classes.drawerPaper }} open>
+  <Sidebar setMobileOpen={setMobileOpen} />
+</Drawer>; */
+}
