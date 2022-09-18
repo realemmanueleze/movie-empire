@@ -33,7 +33,6 @@ export async function createSessionId() {
       } = await movieApi.post('/authentication/session/new', {
         request_token: token,
       });
-      console.log('creator');
       localStorage.setItem('sessionId', sessionId);
     } catch (error) {
       console.log(error);
