@@ -141,9 +141,3 @@ function NavBar() {
 }
 
 export default NavBar;
-
-{
-  /* <Drawer variant="permanent" classes={{ paper: classes.drawerPaper }} open>
-  <Sidebar setMobileOpen={setMobileOpen} />
-</Drawer>; */
-}
