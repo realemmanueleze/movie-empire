@@ -12,6 +12,7 @@ export async function fetchToken() {
     const { data } = await movieApi.get('/authentication/token/new');
 
     const token = data.request_token;
+    console.log(data);
     if (data.success) {
       localStorage.setItem('requestToken', token);
 
@@ -29,10 +30,10 @@ export async function createSessionId() {
     try {
       const {
         data: { session_id: sessionId },
-      } = movieApi.post('/authentiacation/session/new', {
+      } = await movieApi.post('/authentication/session/new', {
         request_token: token,
       });
-
+      console.log('creator');
       localStorage.setItem('sessionId', sessionId);
     } catch (error) {
       console.log(error);

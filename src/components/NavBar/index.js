@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser } from 'features/auth';
 import {
   AppBar,
   IconButton,
@@ -28,27 +30,32 @@ function NavBar() {
   const classes = NavBarStyles();
   const isMobile = useMediaQuery('(max-width:600px)');
   const theme = useTheme();
-  const isAuthenticated = false;
-
   const token = localStorage.getItem('requestToken');
   const sessionIdFromLocalStrorage = localStorage.getItem('sessionId');
+  const dispatch = useDispatch();
+  const { isAuthenticated, user } = useSelector((state) => state.user);
+  console.log(user);
 
   useEffect(() => {
-    const logInUser = async () => {
+    async function logInUser() {
       if (token) {
         if (sessionIdFromLocalStrorage) {
-          const { data: userData } = await movieApi.post(
-            `account?session_id=${sessionIdFromLocalStrorage}`
+          console.log(1);
+          const { data: userData } = await movieApi.get(
+            `/account?session_id=${sessionIdFromLocalStrorage}`
           );
+          dispatch(setUser(userData));
         } else {
-          const sessionId = createSessionId();
-          const { data: userData } = await movieApi.post(
-            `account?session_id=${sessionId}`
+          console.log(2);
+          const sessionId = await createSessionId();
+          const { data: userData } = await movieApi.get(
+            `/account?session_id=${sessionId}`
           );
-          localStorage.setItem('sessionId', sessionId);
+          dispatch(setUser(userData));
         }
       }
-    };
+    }
+    logInUser();
   }, [token]);
 
   return (
@@ -79,7 +86,7 @@ function NavBar() {
               <Button
                 color="inherit"
                 component={Link}
-                to="/profile/:id"
+                to={`/profile/:${user.id}`}
                 className={classes.linkButton}
                 onClick={() => {}}
               >
