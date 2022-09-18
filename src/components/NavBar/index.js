@@ -34,23 +34,22 @@ function NavBar() {
   const sessionIdFromLocalStrorage = localStorage.getItem('sessionId');
   const dispatch = useDispatch();
   const { isAuthenticated, user } = useSelector((state) => state.user);
-  console.log(user);
 
   useEffect(() => {
     async function logInUser() {
       if (token) {
         if (sessionIdFromLocalStrorage) {
-          console.log(1);
           const { data: userData } = await movieApi.get(
             `/account?session_id=${sessionIdFromLocalStrorage}`
           );
+
           dispatch(setUser(userData));
         } else {
-          console.log(2);
           const sessionId = await createSessionId();
           const { data: userData } = await movieApi.get(
             `/account?session_id=${sessionId}`
           );
+
           dispatch(setUser(userData));
         }
       }

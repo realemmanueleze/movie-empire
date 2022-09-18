@@ -16,7 +16,6 @@ function Search() {
     }
   };
   const { searchQuery } = useSelector((state) => state.currentGenreOrCategory);
-  console.log(searchQuery);
 
   return (
     <div className={classes.searchContainer}>
