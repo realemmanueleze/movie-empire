@@ -21,7 +21,6 @@ function Movies() {
     page,
     searchQuery,
   });
-  console.log(data);
 
   if (isFetching) {
     return (

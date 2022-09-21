@@ -12,7 +12,6 @@ export async function fetchToken() {
     const { data } = await movieApi.get('/authentication/token/new');
 
     const token = data.request_token;
-    console.log(data);
     if (data.success) {
       localStorage.setItem('requestToken', token);
 

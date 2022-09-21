@@ -20,8 +20,12 @@ function App() {
         <main className={classes.content}>
           <div className={classes.toolbar} />
           <Routes>
-            <Route path="/" exact="true" element={<MovieInformation />} />
-            <Route path="/movie/:id" exact="true" element={<Movies />} />
+            <Route path="/" exact="true" element={<Movies />} />
+            <Route
+              path="/movie/:id"
+              exact="true"
+              element={<MovieInformation />}
+            />
             <Route path="/actors/:id" exact="true" element={<Actors />} />
             <Route path="/profile/:id" exact="true" element={<Profile />} />
           </Routes>
