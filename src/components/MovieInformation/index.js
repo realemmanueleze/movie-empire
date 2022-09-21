@@ -37,6 +37,11 @@ function MovieInformation() {
   const classes = MovieInformationStyles();
   const dispatch = useDispatch();
 
+  const isMovieFavorited = false;
+  const isMovieWatchlisted = true;
+  const addToFavorites = () => {};
+  const addToWatchlist = () => {};
+
   if (isFetching) {
     <Box display="flex" justifyContent="center" alignItems="center">
       <CircularProgress size="8rem" />
@@ -172,7 +177,34 @@ function MovieInformation() {
             </Grid>
             <Grid item xs={12} sm={6} className={classes.buttonsContainer}>
               <ButtonGroup size="small" variant="outlined">
-                <Button onClick={() => {}} />
+                <Button
+                  onClick={addToFavorites}
+                  endIcon={
+                    isMovieFavorited ? <FavoriteBorderOutlined /> : <Favorite />
+                  }
+                >
+                  {isMovieFavorited ? 'Unfavorite' : 'Favorite'}
+                </Button>
+                <Button
+                  onClick={addToWatchlist}
+                  endIcon={isMovieWatchlisted ? <Remove /> : <PlusOne />}
+                >
+                  Watchlist
+                </Button>
+                <Button
+                  endIcon={<ArrowBack />}
+                  sx={{ borderColor: 'primary.main' }}
+                >
+                  <Typography
+                    component={Link}
+                    variant="subtitle2"
+                    color="inherit"
+                    to="/"
+                    style={{ textDecoration: 'none' }}
+                  >
+                    Back
+                  </Typography>
+                </Button>
               </ButtonGroup>
             </Grid>
           </div>
