@@ -7,6 +7,7 @@ import {
 } from '@mui/material';
 import { useSelector } from 'react-redux';
 import MovieList from 'components/MovieList';
+import Pagination from 'components/Pagination';
 import { useGetMoviesQuery } from '../../services/TMDB';
 import MoviesStyles from './MoviesStyles';
 
@@ -48,6 +49,7 @@ function Movies() {
   return (
     <div className={classes.container}>
       <MovieList movies={data} />
+      <Pagination />
     </div>
   );
 }
