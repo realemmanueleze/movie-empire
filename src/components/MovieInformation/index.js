@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Movies from 'components/Movies';
 
 import {
@@ -25,15 +25,22 @@ import {
 import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import { useGetMovieQuery, useGetMoviesQuery } from 'services/TMDB';
+import {
+  useGetMovieQuery,
+  useGetMoviesQuery,
+  useGetMovieRecommendationQuery,
+} from 'services/TMDB';
+import MovieList from 'components/MovieList';
 import { selectGenreOrCategory } from '../../features/currentGenreOrCategory';
 import MovieInformationStyles from './MovieInformationStyles';
 import genreIcons from '../../assets/genres';
 
 function MovieInformation() {
+  const [trailerModalIsOpen, setTrailerModalIsOpen] = useState(false);
   const { id } = useParams();
   const { data, isFetching, error } = useGetMovieQuery({ id });
-  console.log(data);
+  const { data: recommendations, isFetching: isRecommendationsFetching } =
+    useGetMovieRecommendationQuery({ list: '/recommendations', movie_id: id });
   const classes = MovieInformationStyles();
   const dispatch = useDispatch();
 
@@ -41,6 +48,8 @@ function MovieInformation() {
   const isMovieWatchlisted = true;
   const addToFavorites = () => {};
   const addToWatchlist = () => {};
+
+  console.log(data?.videos?.results);
 
   if (isFetching) {
     <Box display="flex" justifyContent="center" alignItems="center">
@@ -170,7 +179,10 @@ function MovieInformation() {
                 >
                   IMDB
                 </Button>
-                <Button onClick={() => {}} href="/" endIcon={<Theaters />}>
+                <Button
+                  onClick={() => setTrailerModalIsOpen(true)}
+                  endIcon={<Theaters />}
+                >
                   Trailer
                 </Button>
               </ButtonGroup>
@@ -210,6 +222,33 @@ function MovieInformation() {
           </div>
         </Grid>
       </Grid>
+      <Box marginTop="5rem" width="100%">
+        <Typography variant="h3" gutterBottom align="center">
+          You might also like
+        </Typography>
+        {recommendations ? (
+          <MovieList movies={recommendations} numberOfMovies={12} />
+        ) : (
+          'Sorry, there are no movie recommendations at the moment'
+        )}
+      </Box>
+      {data?.videos?.results?.length > 0 && (
+        <Modal
+          closeAfterTransition
+          className={classes.modal}
+          open={trailerModalIsOpen}
+          onClose={() => setTrailerModalIsOpen(false)}
+        >
+          <iframe
+            autoPlay
+            className={classes.video}
+            frameBorder="0"
+            title="Trailer"
+            src={`https://youtube.com/embed/${data.videos.results[0].key}`}
+            allow="autoplay"
+          />
+        </Modal>
+      )}
     </Grid>
   );
 }
