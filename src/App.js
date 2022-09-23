@@ -20,7 +20,9 @@ function App() {
         <main className={classes.content}>
           <div className={classes.toolbar} />
           <Routes>
-            <Route path="/" exact="true" element={<Movies />} />
+            {['/', '/approved'].map((path) => (
+              <Route key={path} path={path} exact="true" element={<Movies />} />
+            ))}
             <Route
               path="/movie/:id"
               exact="true"
