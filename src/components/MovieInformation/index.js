@@ -49,8 +49,6 @@ function MovieInformation() {
   const addToFavorites = () => {};
   const addToWatchlist = () => {};
 
-  console.log(data?.videos?.results);
-
   if (isFetching) {
     <Box display="flex" justifyContent="center" alignItems="center">
       <CircularProgress size="8rem" />

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Grid, Box, Typography, CircularProgress, Button } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
@@ -8,15 +8,14 @@ import {
   useGetActorProfileQuery,
 } from '../../services/TMDB';
 import ActorsStyles from './ActorsStyles';
+import Pagination from '../Pagination/index';
 
 function Actors() {
+  const [page, setPage] = useState(1);
   const { id } = useParams();
   const navigate = useNavigate();
   const { data, isFetching, error } = useGetActorProfileQuery(id);
-  const page = 1;
-  const { data: otherMoviesByActor } = useGetMoviesByActorIdQuery(id, page);
-
-  console.log(otherMoviesByActor);
+  const { data: otherMoviesByActor } = useGetMoviesByActorIdQuery({ id, page });
 
   const classes = ActorsStyles();
 
@@ -104,6 +103,11 @@ function Actors() {
           </Typography>
         )}
       </Box>
+      <Pagination
+        currentPage={page}
+        totalPages={otherMoviesByActor?.total_pages}
+        setPage={setPage}
+      />
     </Grid>
   );
 }

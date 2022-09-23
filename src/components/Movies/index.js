@@ -49,7 +49,11 @@ function Movies() {
   return (
     <div className={classes.container}>
       <MovieList movies={data} />
-      <Pagination />
+      <Pagination
+        currentPage={page}
+        setPage={setPage}
+        totalPages={data.total_pages}
+      />
     </div>
   );
 }

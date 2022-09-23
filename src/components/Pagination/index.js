@@ -2,9 +2,25 @@ import React from 'react';
 import { Typography, Button } from '@mui/material';
 import PaginationStyles from './PaginationStyles';
 
-function Pagination() {
+// eslint-disable-next-line react/prop-types
+function Pagination({ currentPage, totalPages, setPage }) {
   const classes = PaginationStyles();
-  const currentPage = 1;
+
+  const handleNext = () => {
+    if (currentPage < totalPages) {
+      setPage((prev) => prev + 1);
+    }
+  };
+
+  const handlePrev = () => {
+    if (currentPage > 1) {
+      setPage((prev) => prev - 1);
+    }
+  };
+
+  if (totalPages === 1) {
+    return null;
+  }
   return (
     <div className={classes.container}>
       <Button
@@ -12,6 +28,7 @@ function Pagination() {
         variant="contained"
         color="primary"
         type="button"
+        onClick={handlePrev}
       >
         Prev
       </Button>
@@ -23,6 +40,7 @@ function Pagination() {
         variant="contained"
         color="primary"
         type="button"
+        onClick={handleNext}
       >
         Next
       </Button>
