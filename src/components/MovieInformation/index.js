@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Movies from 'components/Movies';
 
 import {
@@ -28,6 +28,7 @@ import axios from 'axios';
 import {
   useGetMovieQuery,
   useGetMoviesQuery,
+  useGetListQuery,
   useGetMovieRecommendationQuery,
 } from 'services/TMDB';
 import MovieList from 'components/MovieList';
@@ -36,18 +37,74 @@ import MovieInformationStyles from './MovieInformationStyles';
 import genreIcons from '../../assets/genres';
 
 function MovieInformation() {
+  const { user } = useSelector((state) => state.user);
   const [trailerModalIsOpen, setTrailerModalIsOpen] = useState(false);
   const { id } = useParams();
+
   const { data, isFetching, error } = useGetMovieQuery({ id });
   const { data: recommendations, isFetching: isRecommendationsFetching } =
     useGetMovieRecommendationQuery({ list: '/recommendations', movie_id: id });
+  const { data: favoriteMovies } = useGetListQuery({
+    listName: 'favorite/movies',
+    accountId: user.id,
+    sessionId: localStorage.getItem('sessionId'),
+    page: 1,
+  });
+  const { data: watchlistMovies } = useGetListQuery({
+    listName: 'watchlist/movies',
+    accountId: user.id,
+    sessionId: localStorage.getItem('sessionId'),
+    page: 1,
+  });
+
   const classes = MovieInformationStyles();
   const dispatch = useDispatch();
 
-  const isMovieFavorited = false;
-  const isMovieWatchlisted = true;
-  const addToFavorites = () => {};
-  const addToWatchlist = () => {};
+  const [isMovieFavorited, setIsMovieFavorited] = useState(false);
+  const [isMovieWatchlisted, setIsMovieWatchlisted] = useState(false);
+
+  useEffect(() => {
+    setIsMovieFavorited(
+      !!favoriteMovies?.results?.find((movie) => movie?.id === data?.id)
+    );
+  }, [favoriteMovies, data]);
+  useEffect(() => {
+    setIsMovieWatchlisted(
+      !!watchlistMovies?.results?.find((movie) => movie?.id === data?.id)
+    );
+  }, [watchlistMovies, data]);
+
+  // Adds Movie To Favorite
+  const addToFavorites = async () => {
+    await axios.post(
+      `https://api.themoviedb.org/3/account/${user.id}/favorite?api_key=${
+        process.env.REACT_APP_TMDB_KEY
+      }&session_id=${localStorage.getItem('sessionId')}`,
+      {
+        media_type: 'movie',
+        movie_id: id,
+        favorite: !isMovieFavorited,
+      }
+    );
+    setIsMovieFavorited((prev) => !prev);
+  };
+
+  // Adds Movie To Watchlist
+  const addToWatchlist = async () => {
+    await axios.post(
+      `https://api.themoviedb.org/3/account/${user.id}//watchlist?api_key=${
+        process.env.REACT_APP_TMDB_KEY
+      }&session_id=${localStorage.getItem('sessionId')}`,
+      {
+        media_type: 'movie',
+        movie_id: id,
+        watchlist: !isMovieWatchlisted,
+      }
+    );
+    await console.log(isMovieWatchlisted);
+    setIsMovieWatchlisted((prev) => !prev);
+    console.log(isMovieWatchlisted);
+  };
 
   if (isFetching) {
     <Box display="flex" justifyContent="center" alignItems="center">

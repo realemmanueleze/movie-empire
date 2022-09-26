@@ -8,12 +8,25 @@ export default makeStyles((theme) => ({
     [theme.breakpoints.down('md')]: {
       margin: '0 auto',
       width: '50%',
-      height: '350px',
+      display: 'flex',
+      justifyContent: 'center',
+      marginBottom: '30px',
+      height: 'auto',
     },
     [theme.breakpoints.down('sm')]: {
       margin: '0 auto 30px auto',
       width: '100%',
-      height: '350px',
+      maxHeight: '350px',
+    },
+  },
+
+  actorProfileContainer: {
+    display: 'flex',
+    justifyContent: 'space-around',
+    margin: '10px 0 !important',
+    [theme.breakpoints.down('md')]: {
+      flexDirection: 'column',
+      flexWrap: 'wrap',
     },
   },
 

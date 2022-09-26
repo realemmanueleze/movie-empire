@@ -47,6 +47,12 @@ export const tmdbApi = createApi({
       },
     }),
 
+    // Get User Specific List
+    getList: builder.query({
+      query: ({ listName, accountId, sessionId, page }) =>
+        `/account/${accountId}/${listName}?api_key=${tmdbApiKey}&session_id=${sessionId}`,
+    }),
+
     // Get Movie List
     getMovieRecommendation: builder.query({
       query: ({ list, movie_id }) =>
@@ -73,4 +79,5 @@ export const {
   useGetMovieRecommendationQuery,
   useGetActorProfileQuery,
   useGetMoviesByActorIdQuery,
+  useGetListQuery,
 } = tmdbApi;

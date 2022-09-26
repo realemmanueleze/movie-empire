@@ -51,16 +51,24 @@ function Actors() {
 
   return (
     <Grid container spacing={3}>
-      <Grid item>
+      <Grid item className={classes.actorProfileContainer}>
         {' '}
-        <Grid item sm={12} lg={5} xl={4}>
+        <Grid sm={12} lg={4} item>
           <img
             className={classes.profileImage}
             src={`https://image.tmdb.org/t/p/w500/${data?.profile_path}`}
             alt={data?.name}
           />
         </Grid>
-        <Grid item lg={7} xl={8} className={classes.actorInformation}>
+        <Grid
+          item
+          lg={7}
+          // lg={7}
+          // xl={8}
+          // sm={12}
+          // md={12}
+          className={classes.actorInformation}
+        >
           <Typography variant="h2" gutterBottom>
             {data?.name}
           </Typography>
@@ -70,25 +78,25 @@ function Actors() {
           <Typography variant="body2" align="justify" paragraph>
             {data?.biography || 'Sorry, no biography yet.'}
           </Typography>
+          <Box marginTop="2rem" display="flex" justifyContent="space-around">
+            <Button
+              variant="contained"
+              color="primary"
+              target="_blank"
+              href={`https://www.imdb.com/name/${data?.imdb_id}`}
+            >
+              IMDB
+            </Button>
+            <Button
+              color="primary"
+              target="_blank"
+              startIcon={<ArrowBack />}
+              onClick={() => navigate(-1)}
+            >
+              Back
+            </Button>
+          </Box>
         </Grid>
-        <Box marginTop="2rem" display="flex" justifyContent="space-around">
-          <Button
-            variant="contained"
-            color="primary"
-            target="_blank"
-            href={`https://www.imdb.com/name/${data?.imdb_id}`}
-          >
-            IMDB
-          </Button>
-          <Button
-            color="primary"
-            target="_blank"
-            startIcon={<ArrowBack />}
-            onClick={() => navigate(-1)}
-          >
-            Back
-          </Button>
-        </Box>
       </Grid>
       <Box margin="2rem 0">
         <Typography variant="h2" gutterBottom align="center">
