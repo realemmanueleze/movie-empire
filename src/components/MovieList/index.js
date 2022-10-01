@@ -4,8 +4,8 @@ import { Grid } from '@mui/material';
 import Movie from 'components/Movie';
 import MovieListStyles from './MovieListStyles';
 
-function MovieList({ movies, numberOfMovies }) {
-  const classes = MovieListStyles();
+function MovieList({ movies, numberOfMovies, justifyContent }) {
+  const classes = MovieListStyles(justifyContent);
 
   return (
     <Grid className={classes.moviesContainer}>

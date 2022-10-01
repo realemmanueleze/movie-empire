@@ -37,25 +37,39 @@ import MovieInformationStyles from './MovieInformationStyles';
 import genreIcons from '../../assets/genres';
 
 function MovieInformation() {
+  // Get User from Redux Store (user slice)
   const { user } = useSelector((state) => state.user);
+
+  //Toggle Movie Trailer Open/Close
   const [trailerModalIsOpen, setTrailerModalIsOpen] = useState(false);
+
+  //Get Current Movie Id
   const { id } = useParams();
 
+  // Get Current Movie
   const { data, isFetching, error } = useGetMovieQuery({ id });
+
+  // Get Movie Recommendations
   const { data: recommendations, isFetching: isRecommendationsFetching } =
     useGetMovieRecommendationQuery({ list: '/recommendations', movie_id: id });
+
+  //Get List of Favorited Movies
   const { data: favoriteMovies } = useGetListQuery({
     listName: 'favorite/movies',
     accountId: user.id,
     sessionId: localStorage.getItem('sessionId'),
     page: 1,
   });
+
+  // Get List of Watchlisted Movies
   const { data: watchlistMovies } = useGetListQuery({
     listName: 'watchlist/movies',
     accountId: user.id,
     sessionId: localStorage.getItem('sessionId'),
     page: 1,
   });
+
+  console.log(watchlistMovies);
 
   const classes = MovieInformationStyles();
   const dispatch = useDispatch();
@@ -68,6 +82,7 @@ function MovieInformation() {
       !!favoriteMovies?.results?.find((movie) => movie?.id === data?.id)
     );
   }, [favoriteMovies, data]);
+
   useEffect(() => {
     setIsMovieWatchlisted(
       !!watchlistMovies?.results?.find((movie) => movie?.id === data?.id)
@@ -92,7 +107,7 @@ function MovieInformation() {
   // Adds Movie To Watchlist
   const addToWatchlist = async () => {
     await axios.post(
-      `https://api.themoviedb.org/3/account/${user.id}//watchlist?api_key=${
+      `https://api.themoviedb.org/3/account/${user.id}/watchlist?api_key=${
         process.env.REACT_APP_TMDB_KEY
       }&session_id=${localStorage.getItem('sessionId')}`,
       {
@@ -101,9 +116,7 @@ function MovieInformation() {
         watchlist: !isMovieWatchlisted,
       }
     );
-    await console.log(isMovieWatchlisted);
     setIsMovieWatchlisted((prev) => !prev);
-    console.log(isMovieWatchlisted);
   };
 
   if (isFetching) {
@@ -115,7 +128,7 @@ function MovieInformation() {
   if (error) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center">
-        <Link to="/">Something has done wrong, please go back </Link>
+        <Link to="/">Something has gone wrong, please go back </Link>
       </Box>
     );
   }

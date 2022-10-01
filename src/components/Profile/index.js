@@ -1,9 +1,10 @@
 import { ExitToApp } from '@mui/icons-material';
 import { Typography, Box, Button } from '@mui/material';
+import MovieList from 'components/MovieList';
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useGetListQuery } from 'services/TMDB';
 
-const favoriteMovies = [];
 function logout() {
   localStorage.clear();
 
@@ -11,7 +12,26 @@ function logout() {
 }
 
 function Profile() {
+  //Get User from Redux Store
   const { user } = useSelector((state) => state.user);
+
+  //Get List of Favorited Movies
+  const { data: favoriteMovies } = useGetListQuery({
+    listName: 'favorite/movies',
+    accountId: user.id,
+    sessionId: localStorage.getItem('sessionId'),
+    page: 1,
+  });
+
+  console.log(favoriteMovies);
+
+  // Get List of Watchlisted Movies
+  const { data: watchlistMovies } = useGetListQuery({
+    listName: 'watchlist/movies',
+    accountId: user.id,
+    sessionId: localStorage.getItem('sessionId'),
+    page: 1,
+  });
   return (
     <Box>
       <Box display="flex" justifyContent="space-between">
@@ -22,12 +42,33 @@ function Profile() {
           Logout &nbsp; <ExitToApp />{' '}
         </Button>
       </Box>
-      {!favoriteMovies.length ? (
+      {!favoriteMovies?.results?.length ? (
         <Typography variant="h5">
           Add favorites or wachlist some movies to see them here
         </Typography>
       ) : (
-        <Box>FAVORITE MOVIES</Box>
+        <Box>
+          <Box marginBottom="30px">
+            <Typography variant="h5" gutterButtom marginBottom="10px">
+              Favorite Movies
+            </Typography>
+            <MovieList
+              justifyContent="flex-start"
+              movies={favoriteMovies}
+              numberOfMovies={favoriteMovies?.results.length}
+            />
+          </Box>
+          <Box margin="10px 0px">
+            <Typography variant="h5" gutterButtom marginBottom="10px">
+              Watchlist
+            </Typography>
+            <MovieList
+              justifyContent="flex-start"
+              movies={watchlistMovies}
+              numberOfMovies={watchlistMovies?.results.length}
+            />
+          </Box>
+        </Box>
       )}
     </Box>
   );
