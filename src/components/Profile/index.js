@@ -1,7 +1,7 @@
 import { ExitToApp } from '@mui/icons-material';
 import { Typography, Box, Button } from '@mui/material';
 import MovieList from 'components/MovieList';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useGetListQuery } from 'services/TMDB';
 
@@ -16,22 +16,26 @@ function Profile() {
   const { user } = useSelector((state) => state.user);
 
   //Get List of Favorited Movies
-  const { data: favoriteMovies } = useGetListQuery({
+  const { data: favoriteMovies, refetch: refetchFavorites } = useGetListQuery({
     listName: 'favorite/movies',
     accountId: user.id,
     sessionId: localStorage.getItem('sessionId'),
     page: 1,
   });
 
-  console.log(favoriteMovies);
-
   // Get List of Watchlisted Movies
-  const { data: watchlistMovies } = useGetListQuery({
+  const { data: watchlistMovies, refetch: refetchWatchlist } = useGetListQuery({
     listName: 'watchlist/movies',
     accountId: user.id,
     sessionId: localStorage.getItem('sessionId'),
     page: 1,
   });
+
+  useEffect(() => {
+    refetchFavorites();
+    refetchWatchlist();
+  }, []);
+
   return (
     <Box>
       <Box display="flex" justifyContent="space-between">
@@ -42,7 +46,7 @@ function Profile() {
           Logout &nbsp; <ExitToApp />{' '}
         </Button>
       </Box>
-      {!favoriteMovies?.results?.length ? (
+      {!favoriteMovies?.results.length && !watchlistMovies?.results.length ? (
         <Typography variant="h5">
           Add favorites or wachlist some movies to see them here
         </Typography>
