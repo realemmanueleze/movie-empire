@@ -1,6 +1,6 @@
 import { ExitToApp } from '@mui/icons-material';
 import { Typography, Box, Button } from '@mui/material';
-import MovieList from 'components/MovieList';
+import SelectedMovies from 'components/SelectedMovies';
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useGetListQuery } from 'services/TMDB';
@@ -56,8 +56,7 @@ function Profile() {
             <Typography variant="h5" gutterButtom marginBottom="10px">
               Favorite Movies
             </Typography>
-            <MovieList
-              justifyContent="flex-start"
+            <SelectedMovies
               movies={favoriteMovies}
               numberOfMovies={favoriteMovies?.results.length}
             />
@@ -66,8 +65,7 @@ function Profile() {
             <Typography variant="h5" gutterButtom marginBottom="10px">
               Watchlist
             </Typography>
-            <MovieList
-              justifyContent="flex-start"
+            <SelectedMovies
               movies={watchlistMovies}
               numberOfMovies={watchlistMovies?.results.length}
             />
