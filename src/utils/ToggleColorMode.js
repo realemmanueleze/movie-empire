@@ -1,9 +1,6 @@
+/* eslint-disable react/prop-types */
 import React, { createContext, useMemo, useState } from 'react';
-import {
-  themeProvider,
-  createTheme,
-  ThemeProvider,
-} from '@mui/material/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 export const ColorModeContext = createContext();
 function ToggleColorMode({ children }) {
