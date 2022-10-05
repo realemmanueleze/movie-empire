@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useEffect } from 'react';
 import {
   Divider,
@@ -26,9 +27,15 @@ function Sidebar({ setMobileOpen }) {
   const classes = SidebarStyles();
   const { data, isFetching } = useGetGenresQuery();
   const dispatch = useDispatch();
-  // const { genreIdOrCategoryName } = useSelector(
-  //   (state) => state.currentGenreOrCategory
-  // );
+
+  const { genreIdOrCategoryName } = useSelector(
+    (state) => state.currentGenreOrCategory
+  );
+
+  // Closes Mobile Menu When a New Genre/Category is Selected
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [genreIdOrCategoryName]);
 
   return (
     <div className={classes.container}>
