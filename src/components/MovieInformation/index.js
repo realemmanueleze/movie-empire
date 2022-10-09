@@ -139,149 +139,155 @@ function MovieInformation() {
           alt={data?.title}
         />
       </Grid>
-      <Grid direction="column" lg={7}>
-        <Typography variant="h3" align="center" gutterButtom>
-          {data?.title} ({data?.release_date.split('-')[0]})
-        </Typography>
-        <Typography variant="h5" align="center" gutterButtom>
-          {data?.tagline}
-        </Typography>
-        <Grid item className={classes.containerSpaceAround}>
-          <Box display="flex" align="center">
-            <Rating readOnly value={data?.vote_average / 2} />
-            <Typography
-              variant="subtitle1"
-              gutterBottom
-              style={{ marginLeft: '10px' }}
-            >
-              {Math.round(data?.vote_average * 10) / 10} / 10
-            </Typography>
-          </Box>
-          <Typography variant="h6" align="center" gutterBottom>
-            {data?.runtime}min | Language: {data?.spoken_languages[0].name}
+      <Grid item lg={7}>
+        <Grid container direction="column">
+          <Typography variant="h3" align="center" gutterBottom>
+            {data?.title} ({data?.release_date.split('-')[0]})
           </Typography>
-        </Grid>
-        <Grid item className={classes.genresContainer}>
-          {data?.genres?.map((genre) => (
-            <Link
-              key={genre.name}
-              className={classes.links}
-              to="/"
-              onClick={() => dispatch(selectGenreOrCategory(genre.id))}
-            >
-              <img
-                src={genreIcons[genre.name.toLowerCase()]}
-                alt={genre.name}
-                className={classes.genreImages}
-                height={30}
-              />
-              <Typography color="textPrimary" variant="subtitle1">
-                {genre.name}
+          <Typography variant="h5" align="center" gutterBottom>
+            {data?.tagline}
+          </Typography>
+          <Grid item className={classes.containerSpaceAround}>
+            <Box display="flex" align="center">
+              <Rating readOnly value={data?.vote_average / 2} />
+              <Typography
+                variant="subtitle1"
+                gutterBottom
+                style={{ marginLeft: '10px' }}
+              >
+                {Math.round(data?.vote_average * 10) / 10} / 10
               </Typography>
-            </Link>
-          ))}
-        </Grid>
-        <Typography variant="h5" gutterBottom style={{ marginTop: '10px' }}>
-          Overview
-        </Typography>
-        <Typography style={{ marginBottom: '2rem' }}>
-          {data?.overview}
-        </Typography>
-        <Typography variant="h5" gutterBottom style={{ marginTop: '10px' }}>
-          Top Cast
-        </Typography>
-        <Grid item container spacing={2}>
-          {data &&
-            data.credits?.cast
-              ?.map(
-                (character, i) =>
-                  character.profile_path && (
-                    <Grid
-                      key={i}
-                      item
-                      xs={4}
-                      md={2}
+            </Box>
+            <Typography variant="h6" align="center" gutterBottom>
+              {data?.runtime}min | Language: {data?.spoken_languages[0].name}
+            </Typography>
+          </Grid>
+          <Grid item className={classes.genresContainer}>
+            {data?.genres?.map((genre) => (
+              <Link
+                key={genre.name}
+                className={classes.links}
+                to="/"
+                onClick={() => dispatch(selectGenreOrCategory(genre.id))}
+              >
+                <img
+                  src={genreIcons[genre.name.toLowerCase()]}
+                  alt={genre.name}
+                  className={classes.genreImages}
+                  height={30}
+                />
+                <Typography color="textPrimary" variant="subtitle1">
+                  {genre.name}
+                </Typography>
+              </Link>
+            ))}
+          </Grid>
+          <Typography variant="h5" gutterBottom style={{ marginTop: '10px' }}>
+            Overview
+          </Typography>
+          <Typography style={{ marginBottom: '2rem' }}>
+            {data?.overview}
+          </Typography>
+          <Typography variant="h5" gutterBottom style={{ marginTop: '10px' }}>
+            Top Cast
+          </Typography>
+          <Grid item container spacing={2}>
+            {data &&
+              data.credits?.cast
+                ?.map(
+                  (character, i) =>
+                    character.profile_path && (
+                      <Grid
+                        key={i}
+                        item
+                        xs={4}
+                        md={2}
+                        component={Link}
+                        to={`/actors/${character.id}`}
+                        style={{ textDecoration: 'none' }}
+                      >
+                        <img
+                          src={`https://image.tmdb.org/t/p/w500/${character.profile_path}`}
+                          alt={character.name}
+                          className={classes.castImage}
+                        />
+                        <Typography color="textPrimary">
+                          {character.name}
+                        </Typography>
+                        <Typography color="textSecondary">
+                          {character.character.split('/')[0]}
+                        </Typography>
+                      </Grid>
+                    )
+                )
+                .splice(0, 6)}
+          </Grid>
+          <Grid item container style={{ marginTop: '2rem' }}>
+            <div className={classes.buttonsContainer}>
+              <Grid item xs={12} sm={6} className={classes.buttonsContainer}>
+                <ButtonGroup size="small" variant="outlined">
+                  <Button
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={data?.homepage}
+                    endIcon={<Language />}
+                  >
+                    website
+                  </Button>
+                  <Button
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={`https://www.imdb.com/title/${data?.imdb_id}`}
+                    endIcon={<MovieIcon />}
+                  >
+                    IMDB
+                  </Button>
+                  <Button
+                    onClick={() => setTrailerModalIsOpen(true)}
+                    endIcon={<Theaters />}
+                  >
+                    Trailer
+                  </Button>
+                </ButtonGroup>
+              </Grid>
+              <Grid item xs={12} sm={6} className={classes.buttonsContainer}>
+                <ButtonGroup size="small" variant="outlined">
+                  <Button
+                    onClick={addToFavorites}
+                    endIcon={
+                      isMovieFavorited ? (
+                        <FavoriteBorderOutlined />
+                      ) : (
+                        <Favorite />
+                      )
+                    }
+                  >
+                    {isMovieFavorited ? 'Unfavorite' : 'Favorite'}
+                  </Button>
+                  <Button
+                    onClick={addToWatchlist}
+                    endIcon={isMovieWatchlisted ? <Remove /> : <PlusOne />}
+                  >
+                    Watchlist
+                  </Button>
+                  <Button
+                    endIcon={<ArrowBack />}
+                    sx={{ borderColor: 'primary.main' }}
+                  >
+                    <Typography
                       component={Link}
-                      to={`/actors/${character.id}`}
+                      variant="subtitle2"
+                      color="inherit"
+                      to="/"
                       style={{ textDecoration: 'none' }}
                     >
-                      <img
-                        src={`https://image.tmdb.org/t/p/w500/${character.profile_path}`}
-                        alt={character.name}
-                        className={classes.castImage}
-                      />
-                      <Typography color="textPrimary">
-                        {character.name}
-                      </Typography>
-                      <Typography color="textSecondary">
-                        {character.character.split('/')[0]}
-                      </Typography>
-                    </Grid>
-                  )
-              )
-              .splice(0, 6)}
-        </Grid>
-        <Grid item container style={{ marginTop: '2rem' }}>
-          <div className={classes.buttonsContainer}>
-            <Grid item xs={12} sm={6} className={classes.buttonsContainer}>
-              <ButtonGroup size="small" variant="outlined">
-                <Button
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href={data?.homepage}
-                  endIcon={<Language />}
-                >
-                  website
-                </Button>
-                <Button
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href={`https://www.imdb.com/title/${data?.imdb_id}`}
-                  endIcon={<MovieIcon />}
-                >
-                  IMDB
-                </Button>
-                <Button
-                  onClick={() => setTrailerModalIsOpen(true)}
-                  endIcon={<Theaters />}
-                >
-                  Trailer
-                </Button>
-              </ButtonGroup>
-            </Grid>
-            <Grid item xs={12} sm={6} className={classes.buttonsContainer}>
-              <ButtonGroup size="small" variant="outlined">
-                <Button
-                  onClick={addToFavorites}
-                  endIcon={
-                    isMovieFavorited ? <FavoriteBorderOutlined /> : <Favorite />
-                  }
-                >
-                  {isMovieFavorited ? 'Unfavorite' : 'Favorite'}
-                </Button>
-                <Button
-                  onClick={addToWatchlist}
-                  endIcon={isMovieWatchlisted ? <Remove /> : <PlusOne />}
-                >
-                  Watchlist
-                </Button>
-                <Button
-                  endIcon={<ArrowBack />}
-                  sx={{ borderColor: 'primary.main' }}
-                >
-                  <Typography
-                    component={Link}
-                    variant="subtitle2"
-                    color="inherit"
-                    to="/"
-                    style={{ textDecoration: 'none' }}
-                  >
-                    Back
-                  </Typography>
-                </Button>
-              </ButtonGroup>
-            </Grid>
-          </div>
+                      Back
+                    </Typography>
+                  </Button>
+                </ButtonGroup>
+              </Grid>
+            </div>
+          </Grid>
         </Grid>
       </Grid>
       <Box marginTop="5rem" width="100%">

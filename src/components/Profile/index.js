@@ -53,7 +53,7 @@ function Profile() {
       ) : (
         <Box>
           <Box marginBottom="30px">
-            <Typography variant="h5" gutterButtom marginBottom="10px">
+            <Typography variant="h5" gutterBottom marginBottom="10px">
               Favorite Movies
             </Typography>
             <SelectedMovies
@@ -62,7 +62,7 @@ function Profile() {
             />
           </Box>
           <Box margin="10px 0px">
-            <Typography variant="h5" gutterButtom marginBottom="10px">
+            <Typography variant="h5" gutterBottom marginBottom="10px">
               Watchlist
             </Typography>
             <SelectedMovies
