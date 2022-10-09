@@ -26,6 +26,15 @@ function App() {
           name="theme-color"
           content={mode === 'light' ? '#1975D1' : '#272727'}
         />
+        <meta
+          name="msapplication-navbutton-color"
+          content={mode === 'light' ? '#1975D1' : '#272727'}
+        />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta
+          name="apple-mobile-web-app-status-bar-style"
+          content={mode === 'light' ? '#1975D1' : '#272727'}
+        />
       </Helmet>
       <div className={classes.root}>
         <NavBar />
