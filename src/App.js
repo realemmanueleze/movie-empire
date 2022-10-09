@@ -1,7 +1,9 @@
-import React, { useRef } from 'react';
+import React, { useRef, useContext } from 'react';
 import { CssBaseline } from '@mui/material';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import useAlan from 'components/Alan';
+import { ColorModeContext } from 'utils/ToggleColorMode';
+import { Helmet } from 'react-helmet';
 import {
   Actors,
   Movies,
@@ -12,12 +14,19 @@ import {
 import useStyles from './styles';
 
 function App() {
+  const { mode } = useContext(ColorModeContext);
   const classes = useStyles();
   const alanBtnContainer = useRef();
   useAlan();
 
   return (
     <Router>
+      <Helmet>
+        <meta
+          name="theme-color"
+          content={mode === 'light' ? '#1975D1' : '#272727'}
+        />
+      </Helmet>
       <div className={classes.root}>
         <NavBar />
         <CssBaseline />
