@@ -10,7 +10,7 @@ import {
 import { ColorModeContext } from '../utils/ToggleColorMode';
 
 function useAlan() {
-  //   const navigate = useNavigate();
+  // const navigate = useNavigate();
   const dispatch = useDispatch();
   const { setMode } = useContext(ColorModeContext);
 

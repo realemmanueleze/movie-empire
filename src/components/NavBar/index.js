@@ -59,8 +59,6 @@ function NavBar() {
     logInUser();
   }, [token]);
 
-  console.log(user);
-
   return (
     <div>
       <AppBar position="fixed">
