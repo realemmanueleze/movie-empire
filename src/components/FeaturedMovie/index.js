@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import FeaturedMovieStyles from './FeaturedMovieStyles';
 
 function FeaturedMovie({ movie }) {
-  console.log(movie);
   const classes = FeaturedMovieStyles();
   return (
     <Box

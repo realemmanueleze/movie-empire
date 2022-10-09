@@ -3,11 +3,13 @@ import React, { createContext, useMemo, useState } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 export const ColorModeContext = createContext();
+
 function ToggleColorMode({ children }) {
-  const [mode, setMode] = useState('light');
+  const [mode, setMode] = useState(localStorage.getItem('mode') || 'light');
+  localStorage.setItem('mode', mode);
 
   const toggleColorMode = () => {
-    setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+    setMode(mode === 'light' ? 'dark' : 'light');
   };
 
   const theme = useMemo(
