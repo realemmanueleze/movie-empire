@@ -53,22 +53,14 @@ function Actors() {
     <Grid container spacing={3}>
       <Grid item className={classes.actorProfileContainer}>
         {' '}
-        <Grid sm={12} lg={4} item>
+        <Grid sm={12} lg={4} md={12} item>
           <img
             className={classes.profileImage}
             src={`https://image.tmdb.org/t/p/w500/${data?.profile_path}`}
             alt={data?.name}
           />
         </Grid>
-        <Grid
-          item
-          lg={7}
-          // lg={7}
-          // xl={8}
-          // sm={12}
-          // md={12}
-          className={classes.actorInformation}
-        >
+        <Grid item lg={7} sm={12} md={12} className={classes.actorInformation}>
           <Typography variant="h2" gutterBottom>
             {data?.name}
           </Typography>

@@ -1,8 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-unsafe-optional-chaining */
 import React, { useState, useEffect } from 'react';
-import Movies from 'components/Movies';
-
 import {
   Modal,
   Typography,
@@ -29,7 +27,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import {
   useGetMovieQuery,
-  useGetMoviesQuery,
   useGetListQuery,
   useGetMovieRecommendationQuery,
 } from 'services/TMDB';
@@ -70,8 +67,6 @@ function MovieInformation() {
     sessionId: localStorage.getItem('sessionId'),
     page: 1,
   });
-
-  console.log(watchlistMovies);
 
   const classes = MovieInformationStyles();
   const dispatch = useDispatch();
