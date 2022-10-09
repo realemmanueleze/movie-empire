@@ -1,3 +1,5 @@
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable no-unsafe-optional-chaining */
 import React, { useState, useEffect } from 'react';
 import Movies from 'components/Movies';
 

@@ -24,7 +24,7 @@ function Movies() {
     searchQuery,
   });
   const lg = useMediaQuery((theme) => theme.breakpoints.only('lg'));
-  const numberOfMovies = lg ? 26 : 21;
+  const numberOfMovies = lg ? 21 : 16;
 
   if (isFetching) {
     return (
@@ -33,7 +33,7 @@ function Movies() {
       </Box>
     );
   }
-  if (!data.results.length) {
+  if (!data?.results.length) {
     return (
       <Box display="flex" justifyContent="center">
         <Typography variant="h4">

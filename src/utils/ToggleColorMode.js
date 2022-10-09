@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-constructed-context-values */
 /* eslint-disable react/prop-types */
 import React, { createContext, useMemo, useState } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
